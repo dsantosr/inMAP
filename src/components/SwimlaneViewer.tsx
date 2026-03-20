@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { FlowchartData, FlowAction } from '../types/flowchart';
-import { LayoutTemplate, Edit2, ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
+import { LayoutTemplate, ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
 
 interface SwimlaneViewerProps {
   flowData: FlowchartData | null;
