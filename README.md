@@ -1,39 +1,41 @@
-# inMAP
+# inMAP - Fluxograma Viewer
 
-**Plataforma imersiva em React para visualização e mapeamento topológico de Fluxogramas de Raia (Swimlanes), gerada nativamente a partir de repositórios estruturados em JSON.**
+Plataforma em React para visualização e mapeamento de fluxogramas em modelo de raias (*swimlanes*), com renderização gerada dinamicamente a partir de arquivos JSON estruturados.
 
-Projetado sob medida para o mapeamento de processos administrativos e mapeamento de jornadas. O inMAP constrói a planta gráfica inteira do fluxograma matematicamente no navegador, descartando a necessidade de editores gráficos de desenho manuais.
+O inMAP foi idealizado para facilitar o arquivamento e a análise gráfica de processos administrativos organizacionais. A solução constrói o fluxo visual diretamente no navegador, dispensando o uso de ferramentas de design gráfico tradicionais.
 
-## 🚀 Principais Funcionalidades
+## Principais Funcionalidades
 
-- **Renderização Topológica (Auto-Layout):** O próprio sistema lê quem está conectado a quem e organiza as prioridades no tempo (da esquerda para a direita) automaticamente nas respectivas raias.
-- **Roteamento Inteligente de Setas (SVG Bézier):** Setas interativas projetadas via matemática, que traçam a jornada do fluxo desviando do texto e adaptando-se a mudanças de tela (Ziguezague e Cascata).
-- **Estilização Dinâmica por Organograma:** Lê a tabela hierárquica do JSON (Presidência, Coordenações, etc.) e distribui as "Cabeças de Raia" perfeitamente com cores padronizadas corporativas.
-- **Micro-interações (QoL):** 
-  - Funcionalidade de Detalhamento *Expand/Collapse* embutido nas caixas.
-  - Câmera Livre com *Controle de Zoom (In/Out)* para navegar em macrorredes complexas.
-  - Painéis laterais e "Cabeçalhos Congelados" (Sticky Headers) com blur de fundo.
-- **Motor de Exportação:** Conversão de alta profundidade (1-Click) para extração de cartões em .PNG respeitando as propriedades gráficas.
+- **Posicionamento Automático (Auto-Layout):** Ordenação cronológica e topológica das etapas, mapeadas verticalmente por unidades de responsabilidade (atores/raias).
+- **Roteamento Vetorial Inteligente:** Conexões desenhadas matematicamente em SVG (curvas de Bézier) com sistema de desvio de sobreposição.
+- **Identidade Visual Guiada por Dados:** Padronização automatizada de cores e de categorias institucionais com a simples leitura do arquivo primário `organogram.json`.
+- **Interface e Usabilidade:** 
+  - Expansão de detalhes metodológicos *in-loco* (*Expand/Collapse*).
+  - Controle de zoom interativo dimensionado na malha gráfica.
+  - Fixação em paralaxe das unidades de responsabilidade (*Sticky Headers*).
+- **Exportação:** Motor embutido para captura unificada do fluxograma renderizado em `.png`.
 
-## 📦 Tecnologias Utilizadas
+## Tecnologias Empregadas
 
-- **[React.js v19](https://react.dev/) / [Vite](https://vitejs.dev/).**
-- **TypeScript:** Para garantir contratos rígidos nas chamadas da estrutura JSON (Raias, Atores e Interfaces).
-- **SVG Engine:** Curvas nativas geradas via manipulação do `getBoundingClientRect` do DOM.
-- **Lucide Icons:** Biblioteca open-source ultraleve de ícones minimalistas.
+- **React.js 19 / Vite:** Ferramental central para gerenciamento do ciclo de vida dos fluxos dom e build de interface.
+- **TypeScript:** Reforço de tipagem estática voltado para garantir a fidedignidade na absorção das entradas JSON.
+- **DOM SVG Engine:** Construção paramétrica das redes de conexão.
+- **Lucide Icons:** Conjunto de ícones e sinalizadores.
 
-## ⚙️ Setup
+## Instruções de Execução
 
-O projeto já está autoconfigurado via Vite. Para rodá-lo em sua máquina ou ambiente interno:
+Requisitos prévios recomendados: Instalação do gerenciador local `npm`.
 
-1. Instale as dependências:
+1. Instale os pacotes e dependências:
    ```bash
    npm install
    ```
 
-2. Execute o servidor de desenvolvimento:
+2. Inicialize o servidor em modo de desenvolvimento:
    ```bash
    npm run dev
    ```
 
-3. Pronto! O projeto estará rodando magicamente e pronto para importar e analisar seus `.json`. Para modificar a aparência corporativa das linhas, edite o arquivo `public/organogram.json`. Para aprender a escrever novos fluxos, leia a nossa [Documentação JSON](./DOCUMENTACAO_JSON.md).
+Para customização das regras e cores institucionais do ambiente, modifique os parâmetros declarados no documento `public/organogram.json`. 
+
+Para instruções técnicas sobre a formulação de novos processos ao sistema, consulte a [Documentação Técnica sobre o Padrão JSON](./DOCUMENTACAO_JSON.md).
