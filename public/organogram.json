@@ -1,0 +1,218 @@
+﻿{
+    "institution":  "ITERMA - Instituto de Colonização e Terras do Maranhão",
+    "theme_config":  {
+                         "acting_levels":  {
+                                               "Nível Administração Superior":  {
+                                                                                    "hue":  0,
+                                                                                    "saturation":  70,
+                                                                                    "lightness":  40
+                                                                                },
+                                               "Nível Assessoramento":  {
+                                                                            "hue":  0,
+                                                                            "saturation":  0,
+                                                                            "lightness":  45
+                                                                        },
+                                               "Nível Suporte Operacional":  {
+                                                                                 "hue":  145,
+                                                                                 "saturation":  60,
+                                                                                 "lightness":  40
+                                                                             },
+                                               "Nível Execução Programática":  {
+                                                                                   "hue":  220,
+                                                                                   "saturation":  65,
+                                                                                   "lightness":  40
+                                                                               }
+                                           },
+                         "hierarchy_styles":  {
+                                                  "root":  "Solid fill, no border",
+                                                  "parent":  "Solid fill, no border",
+                                                  "child":  "Solid border (saturated hue), light background",
+                                                  "grandchild":  "Dashed border (saturated hue), transparent background"
+                                              }
+                     },
+    "organization_structure":  [
+                                   {
+                                       "sector":  "Presidência",
+                                       "acting_level":  "Nível Administração Superior",
+                                       "reports_to":  null,
+                                       "hierarchy_type":  "root"
+                                   },
+                                   {
+                                       "sector":  "Conselho de Administração",
+                                       "acting_level":  "Nível Administração Superior",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "root"
+                                   },
+                                   {
+                                       "sector":  "Procuradoria Jurídica",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Assessoria Especial da Presidência",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Assessoria de Planejamento e Ações Estratégicas",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Gabinete",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Assessoria de Projetos Especiais",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Sala do Cidadão",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Comissão de Gestão SICARF/SEI",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Assessoria de Comunicação",
+                                       "acting_level":  "Nível Assessoramento",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Diretoria de Recursos Fundiários",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent",
+                                       "aliases":  [
+                                                       "DRF"
+                                                   ]
+                                   },
+                                   {
+                                       "sector":  "Coordenação de Ação Fundiária",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Diretoria de Recursos Fundiários",
+                                       "hierarchy_type":  "child",
+                                       "aliases":  [
+                                                       "CAF"
+                                                   ]
+                                   },
+                                   {
+                                       "sector":  "Divisão de Ação Fundiária",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Coordenação de Ação Fundiária",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Comissão de Arrecadação Sumária de Terras",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Coordenação de Ação Fundiária",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Divisão de Arquivo Técnico Gráfico Literal",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Coordenação de Ação Fundiária",
+                                       "hierarchy_type":  "grandchild",
+                                       "aliases":  [
+                                                       "DATGL"
+                                                   ]
+                                   },
+                                   {
+                                       "sector":  "Comissão da Ilha e REURB",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Coordenação de Ação Fundiária",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Comissão de Territórios Tradicionais",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Diretoria de Recursos Fundiários",
+                                       "hierarchy_type":  "child"
+                                   },
+                                   {
+                                       "sector":  "Diretoria de Assentamento e Desenvolvimento Rural",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Coordenação de Estudos e Projetos",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Diretoria de Assentamento e Desenvolvimento Rural",
+                                       "hierarchy_type":  "child"
+                                   },
+                                   {
+                                       "sector":  "Coordenação de Assentamento e Desenvolvimento Rural",
+                                       "acting_level":  "Nível Execução Programática",
+                                       "reports_to":  "Diretoria de Assentamento e Desenvolvimento Rural",
+                                       "hierarchy_type":  "child"
+                                   },
+                                   {
+                                       "sector":  "Diretoria Administrativa e Financeira",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Presidência",
+                                       "hierarchy_type":  "parent"
+                                   },
+                                   {
+                                       "sector":  "Comissão Setorial de Licitação",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Diretoria Administrativa e Financeira",
+                                       "hierarchy_type":  "child"
+                                   },
+                                   {
+                                       "sector":  "Unidade de Administração",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Diretoria Administrativa e Financeira",
+                                       "hierarchy_type":  "child"
+                                   },
+                                   {
+                                       "sector":  "Divisão de Gestão de Recursos Humanos",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Unidade de Administração",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Divisão de Material e Patrimônio",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Unidade de Administração",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Tecnologia da Informação",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Unidade de Administração",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Protocolo",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Unidade de Administração",
+                                       "hierarchy_type":  "grandchild"
+                                   },
+                                   {
+                                       "sector":  "Unidade de Finanças",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Diretoria Administrativa e Financeira",
+                                       "hierarchy_type":  "child"
+                                   },
+                                   {
+                                       "sector":  "Divisão de Execução Orçamentária",
+                                       "acting_level":  "Nível Suporte Operacional",
+                                       "reports_to":  "Unidade de Finanças",
+                                       "hierarchy_type":  "grandchild"
+                                   }
+                               ]
+}
