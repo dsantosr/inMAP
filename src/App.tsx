@@ -82,6 +82,7 @@ function App() {
         <ActionEditor 
           initialAction={Object.keys(editingAction).length ? editingAction as FlowAction : null} 
           existingActors={flowData ? Array.from(new Set(flowData.actions.map(a => a.who))) : []}
+          existingActions={flowData ? flowData.actions : []}
           onSave={handleSaveAction}
           onClose={() => setEditingAction(null)}
         />

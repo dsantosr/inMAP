@@ -5,6 +5,7 @@ import { X, Save } from 'lucide-react';
 interface ActionEditorProps {
   initialAction: FlowAction | null;
   existingActors: string[];
+  existingActions: FlowAction[];
   onSave: (action: FlowAction) => void;
   onClose: () => void;
 }
@@ -15,7 +16,7 @@ interface OrganogramData {
   }[];
 }
 
-export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, existingActors, onSave, onClose }) => {
+export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, existingActors, existingActions, onSave, onClose }) => {
   const [action, setAction] = useState<Partial<FlowAction>>({});
   const [organogramSectors, setOrganogramSectors] = useState<string[]>([]);
 
@@ -30,8 +31,22 @@ export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, exist
     if (initialAction) {
       setAction(initialAction);
     } else {
+      let nextId = "A1";
+      if (existingActions && existingActions.length > 0) {
+         let maxNum = 0;
+         for (const a of existingActions) {
+           const match = a.id.match(/^A(\d+)$/i);
+           if (match) {
+              const num = parseInt(match[1]);
+              if (num > maxNum) maxNum = num;
+           }
+         }
+         if (maxNum > 0) nextId = `A${maxNum + 1}`;
+         else nextId = `A${existingActions.length + 1}`;
+      }
+      
       setAction({
-        id: crypto.randomUUID(),
+        id: nextId,
         what: '',
         who: '',
         how: '',
@@ -79,9 +94,15 @@ export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, exist
         </div>
 
         <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <div>
-            <label style={labelStyle}>O quê? (Ação)</label>
-            <input style={inputStyle} value={action.what || ''} onChange={e => handleChange('what', e.target.value)} placeholder="Ex: Receber documento" />
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <div style={{ flex: '1' }}>
+              <label style={labelStyle}>ID do Bloco</label>
+              <input style={{...inputStyle, fontWeight: 'bold'}} value={action.id || ''} onChange={e => handleChange('id', e.target.value.trim())} placeholder="Ex: A1" disabled={!!initialAction} />
+            </div>
+            <div style={{ flex: '3' }}>
+              <label style={labelStyle}>O quê? (Ação)</label>
+              <input style={inputStyle} value={action.what || ''} onChange={e => handleChange('what', e.target.value)} placeholder="Ex: Receber documento" />
+            </div>
           </div>
           <div>
             <label style={labelStyle}>Quem? (Ator)</label>
@@ -119,7 +140,7 @@ export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, exist
             {action.connection?.type === 'simple' && (
               <div style={{ marginTop: '1rem' }}>
                 <label style={labelStyle}>Ir para (ID da ação):</label>
-                <input style={inputStyle} value={(action.connection as any).to || ''} onChange={e => handleConnectionChange('to', e.target.value)} placeholder="ID do próximo passo" />
+                <input style={inputStyle} value={(action.connection as any).to || ''} onChange={e => handleConnectionChange('to', e.target.value)} placeholder="ID do próximo passo" list="action-ids" />
               </div>
             )}
             
@@ -138,14 +159,20 @@ export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, exist
                 </div>
                 <div>
                   <label style={labelStyle}>Se POSITIVO, ir para (ID):</label>
-                  <input style={inputStyle} value={(action.connection as any).positiveTo || ''} onChange={e => handleConnectionChange('positiveTo', e.target.value)} />
+                  <input style={inputStyle} value={(action.connection as any).positiveTo || ''} onChange={e => handleConnectionChange('positiveTo', e.target.value)} list="action-ids" />
                 </div>
                 <div>
                   <label style={labelStyle}>Se NEGATIVO, ir para (ID):</label>
-                  <input style={inputStyle} value={(action.connection as any).negativeTo || ''} onChange={e => handleConnectionChange('negativeTo', e.target.value)} />
+                  <input style={inputStyle} value={(action.connection as any).negativeTo || ''} onChange={e => handleConnectionChange('negativeTo', e.target.value)} list="action-ids" />
                 </div>
               </div>
             )}
+
+            <datalist id="action-ids">
+              {existingActions.filter(a => a.id !== action.id).map(a => (
+                <option key={a.id} value={a.id} label={`${a.id} - ${a.what}`} />
+              ))}
+            </datalist>
           </div>
         </div>
 
