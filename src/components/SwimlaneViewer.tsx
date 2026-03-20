@@ -157,7 +157,7 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
   const activeZoom = isExporting ? 1 : zoomLevel;
 
   useEffect(() => {
-    fetch('/organogram.json')
+    fetch(`${import.meta.env.BASE_URL}organogram.json`)
       .then(res => res.json())
       .then(data => setOrganogram(data))
       .catch(console.error);

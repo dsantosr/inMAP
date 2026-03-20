@@ -51,7 +51,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAc
   return (
     <div className="sidebar">
       <div style={{ marginBottom: "1.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textAlign: "center" }}>
-        <img src="/Logo.png" alt="ITERMA Logo" style={{ height: "48px", width: "auto" }} title="ITERMA" />
+        <img src={`${import.meta.env.BASE_URL}Logo.png`} alt="ITERMA Logo" style={{ height: "48px", width: "auto" }} title="ITERMA" />
         <div>
           <h1 style={{ margin: 0, fontSize: "1.2rem" }}>inMAP</h1>
           <p style={{ color: "var(--text-secondary)", fontSize: "0.75rem", margin: 0, marginTop: "0.2rem" }}>
