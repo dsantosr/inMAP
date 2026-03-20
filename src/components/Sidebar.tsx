@@ -102,23 +102,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAc
 
       {flowData && (
         <div className="sidebar-editor">
-          <h2 style={{ fontSize: "0.9rem", marginBottom: "0.5rem" }}>Propriedades</h2>
           <div style={{ padding: "0.75rem", backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "6px" }}>
-            <div style={{ marginBottom: "0.75rem" }}>
-              <label style={{ display: "block", fontSize: "0.75rem", color: "var(--text-secondary)", marginBottom: "0.3rem" }}>Nome do Fluxo</label>
-              <input
-                type="text"
-                value={flowData.name}
-                onChange={(e) => setFlowData({ ...flowData, name: e.target.value })}
-                style={{
-                  width: "100%", padding: "0.4rem", borderRadius: "4px", border: "1px solid var(--border-color)",
-                  background: "var(--bg-color)", color: "var(--text-primary)", fontSize: "0.8rem"
-                }}
-              />
-            </div>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>
-              <FileJson size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: "5px" }} />
-              Total de ações: {flowData.actions.length}
+            <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", margin: 0, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <FileJson size={16} />
+              <strong style={{ color: "var(--accent-color)" }}>{flowData.actions.length}</strong> Ações Cadastradas
             </p>
           </div>
         </div>

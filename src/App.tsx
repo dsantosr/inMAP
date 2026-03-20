@@ -76,6 +76,7 @@ function App() {
           onSelectAction={setSelectedActionId} 
           exportRef={exportRef}
           isExporting={isExporting}
+          onChangeName={(newName: string) => flowData && setFlowData({ ...flowData, name: newName })}
         />
       </div>
       {editingAction !== null && (

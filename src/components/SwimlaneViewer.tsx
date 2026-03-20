@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { FlowchartData, FlowAction } from '../types/flowchart';
-import { LayoutTemplate, ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
+import { LayoutTemplate, ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize, Edit2 } from 'lucide-react';
 
 interface SwimlaneViewerProps {
   flowData: FlowchartData | null;
@@ -8,6 +8,7 @@ interface SwimlaneViewerProps {
   onSelectAction: (id: string | null) => void;
   exportRef?: React.RefObject<HTMLDivElement | null>;
   isExporting?: boolean;
+  onChangeName?: (name: string) => void;
 }
 
 interface OrganogramData {
@@ -144,7 +145,7 @@ const getActionLevels = (actions: FlowAction[]): Record<string, number> => {
   return levels;
 };
 
-export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, selectedActionId, onSelectAction, exportRef, isExporting = false }) => {
+export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, selectedActionId, onSelectAction, exportRef, isExporting = false, onChangeName }) => {
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [paths, setPaths] = useState<any[]>([]);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
@@ -518,8 +519,27 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
 
   return (
     <div style={{ padding: "0.5rem", height: "100%", display: "flex", flexDirection: "column" }}>
-      <header style={{ marginBottom: "0.5rem", paddingLeft: "0.5rem" }}>
-        <h2 style={{ fontSize: "1.2rem", color: "#fff", margin: 0 }}>{flowData.name}</h2>
+      <header style={{ marginBottom: "0.5rem", paddingLeft: "0.5rem", display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <input 
+          value={flowData.name}
+          onChange={(e) => onChangeName?.(e.target.value)}
+          style={{
+            fontSize: "1.2rem",
+            color: "#fff",
+            margin: 0,
+            background: "transparent",
+            border: "1px solid transparent",
+            borderBottom: "1px dashed rgba(255,255,255,0.3)",
+            fontWeight: "bold",
+            padding: "0.1rem 0",
+            width: "350px",
+            fontFamily: "inherit",
+            cursor: "text"
+          }}
+          placeholder="Nome do Fluxograma"
+          title="Clique para renomear"
+        />
+        <Edit2 size={16} opacity={0.5} color="var(--accent-color)" />
       </header>
       <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden', border: "1px solid var(--border-color)", borderRadius: "12px", background: "var(--panel-bg)", backdropFilter: "blur(10px)" }}>
       <div className="swimlane-viewer" style={{ flex: 1, overflow: 'auto', backgroundColor: 'var(--bg-color)', zIndex: 0 }}>
