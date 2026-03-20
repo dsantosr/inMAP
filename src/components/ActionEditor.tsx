@@ -9,8 +9,22 @@ interface ActionEditorProps {
   onClose: () => void;
 }
 
+interface OrganogramData {
+  organization_structure: {
+    sector: string;
+  }[];
+}
+
 export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, existingActors, onSave, onClose }) => {
   const [action, setAction] = useState<Partial<FlowAction>>({});
+  const [organogramSectors, setOrganogramSectors] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}organogram.json`)
+      .then(res => res.json())
+      .then((data: OrganogramData) => setOrganogramSectors(data.organization_structure.map(s => s.sector)))
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     if (initialAction) {
@@ -79,7 +93,7 @@ export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, exist
               list="actors-list"
             />
             <datalist id="actors-list">
-              {existingActors.map(actor => (
+              {Array.from(new Set([...existingActors, ...organogramSectors])).sort().map(actor => (
                 <option key={actor} value={actor} />
               ))}
             </datalist>
