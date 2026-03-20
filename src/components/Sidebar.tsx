@@ -102,11 +102,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAc
 
       {flowData && (
         <div className="sidebar-editor">
-          <div style={{ padding: "0.75rem", backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "6px" }}>
-            <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", margin: 0, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <FileJson size={16} />
-              <strong style={{ color: "var(--accent-color)" }}>{flowData.actions.length}</strong> Ações Cadastradas
+          <div style={{ padding: "0.75rem", backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "6px", textAlign: "center" }}>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", margin: '0 0 0.4rem 0', display: "flex", alignItems: "center", justifyContent: "center", gap: "0.3rem", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+              <FileJson size={14} /> Ações Cadastradas
             </p>
+            <div style={{ fontSize: "1.5rem", fontWeight: "bold", color: "var(--accent-color)" }}>
+              {flowData.actions.length}
+            </div>
           </div>
         </div>
       )}

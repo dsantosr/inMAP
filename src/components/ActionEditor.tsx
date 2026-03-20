@@ -63,11 +63,21 @@ export const ActionEditor: React.FC<ActionEditorProps> = ({ initialAction, exist
   const handleConnectionChange = (field: string, value: any) => {
     setAction(prev => {
       const conn = { ...(prev.connection || { type: 'none' }) } as any;
+      
+      let nextId1 = "";
+      let nextId2 = "";
+      const match = prev.id?.match(/^A(\d+)$/i);
+      if (match) {
+        const currentNum = parseInt(match[1], 10);
+        nextId1 = `A${currentNum + 1}`;
+        nextId2 = `A${currentNum + 2}`;
+      }
+
       if (field === 'type') {
-        // Reset subfields when type changes
-        if (value === 'simple') return { ...prev, connection: { type: 'simple', to: '' } };
-        if (value === 'bifurcation') return { ...prev, connection: { type: 'bifurcation', to: [''] } };
-        if (value === 'conditional') return { ...prev, connection: { type: 'conditional', text: '', positiveTo: '', negativeTo: '' } };
+        // Pre-fill connection targets when activating connection types
+        if (value === 'simple') return { ...prev, connection: { type: 'simple', to: nextId1 } };
+        if (value === 'bifurcation') return { ...prev, connection: { type: 'bifurcation', to: [nextId1, nextId2] } };
+        if (value === 'conditional') return { ...prev, connection: { type: 'conditional', text: '', positiveTo: nextId1, negativeTo: nextId2 } };
         return { ...prev, connection: { type: 'none' } };
       }
       conn[field] = value;
