@@ -1,4 +1,4 @@
-# inMAP - Fluxograma Viewer 🗺️
+# inMAP
 
 **Plataforma imersiva em React para visualização e mapeamento topológico de Fluxogramas de Raia (Swimlanes), gerada nativamente a partir de repositórios estruturados em JSON.**
 
@@ -17,12 +17,12 @@ Projetado sob medida para o mapeamento de processos administrativos e mapeamento
 
 ## 📦 Tecnologias Utilizadas
 
-- **[React.js v19](https://react.dev/) / [Vite](https://vitejs.dev/).
+- **[React.js v19](https://react.dev/) / [Vite](https://vitejs.dev/).**
 - **TypeScript:** Para garantir contratos rígidos nas chamadas da estrutura JSON (Raias, Atores e Interfaces).
 - **SVG Engine:** Curvas nativas geradas via manipulação do `getBoundingClientRect` do DOM.
 - **Lucide Icons:** Biblioteca open-source ultraleve de ícones minimalistas.
 
-## ⚙️ Como Começar (Desenvolvimento)
+## ⚙️ Setup
 
 O projeto já está autoconfigurado via Vite. Para rodá-lo em sua máquina ou ambiente interno:
 
