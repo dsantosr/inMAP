@@ -542,7 +542,11 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
         <Edit2 size={16} opacity={0.5} color="var(--accent-color)" />
       </header>
       <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden', border: "1px solid var(--border-color)", borderRadius: "12px", background: "var(--panel-bg)", backdropFilter: "blur(10px)" }}>
-      <div className="swimlane-viewer" style={{ flex: 1, overflow: 'auto', backgroundColor: 'var(--bg-color)', zIndex: 0 }}>
+      <div 
+        className="swimlane-viewer" 
+        style={{ flex: 1, overflow: 'auto', backgroundColor: 'var(--bg-color)', zIndex: 0 }}
+        onClick={() => selectedActionId && onSelectAction(null)}
+      >
         <div 
           ref={(el) => {
             // @ts-ignore
@@ -659,6 +663,7 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
                       gap: "0"
                     }}
                     onClick={(e) => {
+                      e.stopPropagation();
                       // Prevent toggle selection if clicking the expand button
                       if ((e.target as HTMLElement).closest('button')) return;
                       onSelectAction(action.id === selectedActionId ? null : action.id);
