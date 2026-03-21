@@ -149,6 +149,8 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const [paths, setPaths] = useState<any[]>([]);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0, scrollLeft: 0, scrollTop: 0 });
   const [organogram, setOrganogram] = useState<OrganogramData | null>(null);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -544,8 +546,35 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
       <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden', border: "1px solid var(--border-color)", borderRadius: "12px", background: "var(--panel-bg)", backdropFilter: "blur(10px)" }}>
       <div 
         className="swimlane-viewer" 
-        style={{ flex: 1, overflow: 'auto', backgroundColor: 'var(--bg-color)', zIndex: 0 }}
+        style={{ 
+          flex: 1, 
+          overflow: 'auto', 
+          backgroundColor: 'var(--bg-color)', 
+          zIndex: 0,
+          cursor: isDragging ? 'grabbing' : 'grab'
+        }}
         onClick={() => selectedActionId && onSelectAction(null)}
+        onMouseDown={(e) => {
+          // Ignore right/middle clicks
+          if (e.button !== 0) return;
+          setIsDragging(true);
+          setDragStart({
+            x: e.pageX,
+            y: e.pageY,
+            scrollLeft: e.currentTarget.scrollLeft,
+            scrollTop: e.currentTarget.scrollTop
+          });
+        }}
+        onMouseMove={(e) => {
+          if (!isDragging) return;
+          e.preventDefault();
+          const dx = e.pageX - dragStart.x;
+          const dy = e.pageY - dragStart.y;
+          e.currentTarget.scrollLeft = dragStart.scrollLeft - dx;
+          e.currentTarget.scrollTop = dragStart.scrollTop - dy;
+        }}
+        onMouseUp={() => setIsDragging(false)}
+        onMouseLeave={() => setIsDragging(false)}
       >
         <div 
           ref={(el) => {
@@ -662,6 +691,7 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
                       cursor: "pointer",
                       gap: "0"
                     }}
+                    onMouseDown={(e) => e.stopPropagation()}
                     onClick={(e) => {
                       e.stopPropagation();
                       // Prevent toggle selection if clicking the expand button
