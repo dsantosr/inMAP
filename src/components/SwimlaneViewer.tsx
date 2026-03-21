@@ -511,7 +511,7 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
 
     container.addEventListener('wheel', handleWheel, { passive: false });
     return () => container.removeEventListener('wheel', handleWheel);
-  }, []);
+  }, [flowData]);
 
   useEffect(() => {
     // Força uma atualização para garantir que as linhas SVG sejam recalculadas
