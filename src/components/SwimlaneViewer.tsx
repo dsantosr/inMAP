@@ -154,6 +154,7 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
   const [organogram, setOrganogram] = useState<OrganogramData | null>(null);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const actionLevels = React.useMemo(() => flowData ? getActionLevels(flowData.actions) : {}, [flowData]);
   const maxLevel = Math.ceil(Math.max(0, ...Object.values(actionLevels)));
 
@@ -492,12 +493,28 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
 
       return { id: `${edge.sourceId}-${edge.targetId}-${edge.index}`, sourceId: edge.sourceId, targetId: edge.targetId, d, color: edge.color, x1: x0, y1: y0, x2: x3, y2: y3 };
     });
-
     setPaths(newPaths);
   };
 
   useEffect(() => {
-    // Initial draw and setup resize listener
+    // Handler nativo de eventos de scroll (necessário para preventDefault sem warning no Chrome)
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Bloqueia a rolagem padrão da tareda (eixo Y e X)
+      e.preventDefault();
+      
+      const zoomChange = e.deltaY > 0 ? -0.1 : 0.1;
+      setZoomLevel(prev => Math.min(2, Math.max(0.2, prev + zoomChange)));
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => container.removeEventListener('wheel', handleWheel);
+  }, []);
+
+  useEffect(() => {
+    // Força uma atualização para garantir que as linhas SVG sejam recalculadas
     const timer = setTimeout(updateConnections, 100);
     window.addEventListener('resize', updateConnections);
     return () => {
@@ -545,13 +562,15 @@ export const SwimlaneViewer: React.FC<SwimlaneViewerProps> = ({ flowData, select
       </header>
       <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden', border: "1px solid var(--border-color)", borderRadius: "12px", background: "var(--panel-bg)", backdropFilter: "blur(10px)" }}>
       <div 
+        ref={containerRef}
         className="swimlane-viewer" 
         style={{ 
           flex: 1, 
           overflow: 'auto', 
           backgroundColor: 'var(--bg-color)', 
           zIndex: 0,
-          cursor: isDragging ? 'grabbing' : 'grab'
+          cursor: isDragging ? 'grabbing' : 'grab',
+          userSelect: isDragging ? 'none' : 'auto'
         }}
         onClick={() => selectedActionId && onSelectAction(null)}
         onMouseDown={(e) => {
