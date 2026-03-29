@@ -15,7 +15,7 @@ const COLORS = [
 
 const RADIAN = Math.PI / 180;
 
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }: any) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
   if (percent < 0.05) return null;
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -60,7 +60,7 @@ export const SetorChart: React.FC<SetorChartProps> = ({ data, onSelectSetor }) =
               outerRadius={120}
               fill="#8884d8"
               dataKey="value"
-              onClick={(entry) => onSelectSetor?.(entry.name)}
+              onClick={(entry) => entry.name && onSelectSetor?.(entry.name)}
               style={{ cursor: onSelectSetor ? 'pointer' : 'default' }}
             >
               {data.map((entry, index) => (
