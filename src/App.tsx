@@ -4,9 +4,13 @@ import './App.css';
 import { Sidebar } from './components/Sidebar';
 import { SwimlaneViewer } from './components/SwimlaneViewer';
 import { ActionEditor } from './components/ActionEditor';
+import { ProcessDashboard } from './components/ProcessDashboard';
 import type { FlowchartData, FlowAction } from './types/flowchart';
 
+export type AppModule = 'flowchart' | 'processos';
+
 function App() {
+  const [activeModule, setActiveModule] = useState<AppModule>('flowchart');
   const [flowData, setFlowData] = useState<FlowchartData | null>(null);
   const [editingAction, setEditingAction] = useState<FlowAction | Partial<FlowAction> | null>(null);
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
@@ -36,7 +40,6 @@ function App() {
     if (!exportRef.current || !flowData) return;
     setIsExporting(true);
     
-    // Tempo para React renderizar cards expandidos e SVG reposicionar conexões
     setTimeout(async () => {
       try {
         const dataUrl = await toPng(exportRef.current!, {
@@ -61,6 +64,8 @@ function App() {
   return (
     <div className="layout-container">
       <Sidebar 
+        activeModule={activeModule}
+        onModuleChange={setActiveModule}
         flowData={flowData} 
         setFlowData={setFlowData} 
         onAddAction={() => setEditingAction({})} 
@@ -70,16 +75,20 @@ function App() {
         isExporting={isExporting}
       />
       <div className="main-view">
-        <SwimlaneViewer 
-          flowData={flowData} 
-          selectedActionId={selectedActionId}
-          onSelectAction={setSelectedActionId} 
-          exportRef={exportRef}
-          isExporting={isExporting}
-          onChangeName={(newName: string) => flowData && setFlowData({ ...flowData, name: newName })}
-        />
+        {activeModule === 'flowchart' ? (
+          <SwimlaneViewer 
+            flowData={flowData} 
+            selectedActionId={selectedActionId}
+            onSelectAction={setSelectedActionId} 
+            exportRef={exportRef}
+            isExporting={isExporting}
+            onChangeName={(newName: string) => flowData && setFlowData({ ...flowData, name: newName })}
+          />
+        ) : (
+          <ProcessDashboard />
+        )}
       </div>
-      {editingAction !== null && (
+      {editingAction !== null && activeModule === 'flowchart' && (
         <ActionEditor 
           initialAction={Object.keys(editingAction).length ? editingAction as FlowAction : null} 
           existingActors={flowData ? Array.from(new Set(flowData.actions.map(a => a.who))) : []}

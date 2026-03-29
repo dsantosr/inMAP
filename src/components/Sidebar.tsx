@@ -1,8 +1,11 @@
 import React, { useRef } from 'react';
 import type { FlowchartData } from '../types/flowchart';
-import { Upload, Download, FileJson, Edit2, Image } from 'lucide-react';
+import type { AppModule } from '../App';
+import { Upload, Download, FileJson, Edit2, Image, GitBranch, BarChart3 } from 'lucide-react';
 
 interface SidebarProps {
+  activeModule: AppModule;
+  onModuleChange: (module: AppModule) => void;
   flowData: FlowchartData | null;
   setFlowData: React.Dispatch<React.SetStateAction<FlowchartData | null>>;
   onAddAction: () => void;
@@ -12,7 +15,17 @@ interface SidebarProps {
   isExporting: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAction, selectedActionId, onEditSelected, onExportPNG, isExporting }) => {
+export const Sidebar: React.FC<SidebarProps> = ({
+  activeModule,
+  onModuleChange,
+  flowData,
+  setFlowData,
+  onAddAction,
+  selectedActionId,
+  onEditSelected,
+  onExportPNG,
+  isExporting,
+}) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +42,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAc
       }
     };
     reader.readAsText(file);
-    // Reset file input
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -50,7 +62,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAc
 
   return (
     <div className="sidebar">
-      <div style={{ marginBottom: "1.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textAlign: "center" }}>
+      {/* Branding */}
+      <div style={{ marginBottom: "1rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", textAlign: "center" }}>
         <img src={`${import.meta.env.BASE_URL}Logo.png`} alt="ITERMA Logo" style={{ height: "48px", width: "auto" }} title="ITERMA" />
         <div>
           <h1 style={{ margin: 0, fontSize: "1.2rem" }}>inMAP</h1>
@@ -60,58 +73,97 @@ export const Sidebar: React.FC<SidebarProps> = ({ flowData, setFlowData, onAddAc
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2rem" }}>
-        <input
-          type="file"
-          accept=".json"
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-          onChange={handleFileUpload}
-        />
-        <button className="btn" onClick={() => fileInputRef.current?.click()}>
-          <Upload size={14} /> Importar JSON
-        </button>
-        <button className="btn btn-secondary" onClick={handleDownload} disabled={!flowData || isExporting}>
-          <Download size={14} /> Exportar JSON
-        </button>
-        <button 
-          className="btn" 
-          onClick={onExportPNG} 
-          disabled={!flowData || isExporting}
-          style={{ backgroundColor: isExporting ? "var(--border-color)" : "var(--panel-bg)", border: "1px solid var(--border-color)" }}
+      {/* Module Selector */}
+      <div className="module-selector">
+        <button
+          className={`module-tab ${activeModule === 'flowchart' ? 'active' : ''}`}
+          onClick={() => onModuleChange('flowchart')}
+          title="Fluxogramas"
         >
-          <Image size={14} /> {isExporting ? "Gerando Imagem..." : "Exportar PNG"}
-        </button>
-        <button className="btn" style={{ backgroundColor: "var(--accent-color)", marginTop: "0.5rem" }} onClick={onAddAction}>
-          Adicionar Ação
+          <GitBranch size={14} />
+          <span>Fluxogramas</span>
         </button>
         <button
-          className="btn"
-          style={{
-            backgroundColor: selectedActionId ? "#FDBD13" : "transparent",
-            color: selectedActionId ? "#111" : "var(--text-secondary)",
-            border: selectedActionId ? "none" : "1px solid var(--border-color)",
-            marginTop: "0.5rem"
-          }}
-          onClick={onEditSelected}
-          disabled={!selectedActionId}
+          className={`module-tab ${activeModule === 'processos' ? 'active' : ''}`}
+          onClick={() => onModuleChange('processos')}
+          title="Análise de Processos"
         >
-          <Edit2 size={14} /> Editar Ação
+          <BarChart3 size={14} />
+          <span>Processos</span>
         </button>
       </div>
 
-      {flowData && (
-        <div className="sidebar-editor">
-          <div style={{ padding: "0.75rem", backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "6px", textAlign: "center" }}>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", margin: '0 0 0.4rem 0', display: "flex", alignItems: "center", justifyContent: "center", gap: "0.3rem", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              <FileJson size={14} /> Ações Cadastradas
-            </p>
-            <div style={{ fontSize: "1.5rem", fontWeight: "bold", color: "var(--accent-color)" }}>
-              {flowData.actions.length}
-            </div>
+      {/* Context-dependent actions */}
+      {activeModule === 'flowchart' ? (
+        <>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2rem" }}>
+            <input
+              type="file"
+              accept=".json"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileUpload}
+            />
+            <button className="btn" onClick={() => fileInputRef.current?.click()}>
+              <Upload size={14} /> Importar JSON
+            </button>
+            <button className="btn btn-secondary" onClick={handleDownload} disabled={!flowData || isExporting}>
+              <Download size={14} /> Exportar JSON
+            </button>
+            <button 
+              className="btn" 
+              onClick={onExportPNG} 
+              disabled={!flowData || isExporting}
+              style={{ backgroundColor: isExporting ? "var(--border-color)" : "var(--panel-bg)", border: "1px solid var(--border-color)" }}
+            >
+              <Image size={14} /> {isExporting ? "Gerando Imagem..." : "Exportar PNG"}
+            </button>
+            <button className="btn" style={{ backgroundColor: "var(--accent-color)", marginTop: "0.5rem" }} onClick={onAddAction}>
+              Adicionar Ação
+            </button>
+            <button
+              className="btn"
+              style={{
+                backgroundColor: selectedActionId ? "#FDBD13" : "transparent",
+                color: selectedActionId ? "#111" : "var(--text-secondary)",
+                border: selectedActionId ? "none" : "1px solid var(--border-color)",
+                marginTop: "0.5rem"
+              }}
+              onClick={onEditSelected}
+              disabled={!selectedActionId}
+            >
+              <Edit2 size={14} /> Editar Ação
+            </button>
           </div>
+
+          {flowData && (
+            <div className="sidebar-editor">
+              <div style={{ padding: "0.75rem", backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "6px", textAlign: "center" }}>
+                <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", margin: '0 0 0.4rem 0', display: "flex", alignItems: "center", justifyContent: "center", gap: "0.3rem", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                  <FileJson size={14} /> Ações Cadastradas
+                </p>
+                <div style={{ fontSize: "1.5rem", fontWeight: "bold", color: "var(--accent-color)" }}>
+                  {flowData.actions.length}
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div style={{ padding: "0.75rem", backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "6px", textAlign: "center" }}>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", margin: '0 0 0.4rem 0', textTransform: "uppercase", letterSpacing: "0.5px" }}>
+              Módulo Ativo
+            </p>
+            <p style={{ fontSize: "0.85rem", color: "var(--text-primary)", margin: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.3rem" }}>
+              <BarChart3 size={14} /> Análise de Processos
+            </p>
+          </div>
+          <p style={{ fontSize: "0.7rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+            Importe um arquivo CSV na área principal para visualizar insights e identificar gargalos nos processos.
+          </p>
         </div>
       )}
     </div>
   );
-}
+};
