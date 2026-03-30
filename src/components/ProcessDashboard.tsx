@@ -112,9 +112,12 @@ export const ProcessDashboard: React.FC<ProcessDashboardProps> = () => {
     [filteredData, ignoredSituacoes]
   );
 
+  // Base records exluding "ignored/concluded" statuses (used for bottleneck-focused charts)
+  const pendingData = useMemo(() => filteredData.filter(r => !ignoredSituacoes.has(r.situacao)), [filteredData, ignoredSituacoes]);
+
   const situacaoData = useMemo(() => groupBy(filteredData, 'situacao'), [filteredData]);
-  const setorData = useMemo(() => groupBy(filteredData, 'setor'), [filteredData]);
-  const crossData = useMemo(() => crossTabSetorSituacao(filteredData), [filteredData]);
+  const setorData = useMemo(() => groupBy(pendingData, 'setor'), [pendingData]);
+  const crossData = useMemo(() => crossTabSetorSituacao(pendingData), [pendingData]);
 
   // KPI totals
   const kpiTotals = useMemo(() => {
