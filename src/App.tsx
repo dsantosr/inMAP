@@ -22,7 +22,7 @@ function App() {
       setFlowData({ name: "Novo Fluxograma", actions: [action] });
     } else {
       const exists = flowData.actions.find(a => a.id === action.id);
-      const newActions = exists 
+      const newActions = exists
         ? flowData.actions.map(a => a.id === action.id ? action : a)
         : [...flowData.actions, action];
       setFlowData({ ...flowData, actions: newActions });
@@ -39,7 +39,7 @@ function App() {
   const handleExportPNG = async () => {
     if (!exportRef.current || !flowData) return;
     setIsExporting(true);
-    
+
     setTimeout(async () => {
       try {
         const dataUrl = await toPng(exportRef.current!, {
@@ -63,12 +63,12 @@ function App() {
 
   return (
     <div className="layout-container">
-      <Sidebar 
+      <Sidebar
         activeModule={activeModule}
         onModuleChange={setActiveModule}
-        flowData={flowData} 
-        setFlowData={setFlowData} 
-        onAddAction={() => setEditingAction({})} 
+        flowData={flowData}
+        setFlowData={setFlowData}
+        onAddAction={() => setEditingAction({})}
         selectedActionId={selectedActionId}
         onEditSelected={handleEditSelected}
         onExportPNG={handleExportPNG}
@@ -76,10 +76,10 @@ function App() {
       />
       <div className="main-view">
         {activeModule === 'flowchart' ? (
-          <SwimlaneViewer 
-            flowData={flowData} 
+          <SwimlaneViewer
+            flowData={flowData}
             selectedActionId={selectedActionId}
-            onSelectAction={setSelectedActionId} 
+            onSelectAction={setSelectedActionId}
             exportRef={exportRef}
             isExporting={isExporting}
             onChangeName={(newName: string) => flowData && setFlowData({ ...flowData, name: newName })}
@@ -89,8 +89,8 @@ function App() {
         )}
       </div>
       {editingAction !== null && activeModule === 'flowchart' && (
-        <ActionEditor 
-          initialAction={Object.keys(editingAction).length ? editingAction as FlowAction : null} 
+        <ActionEditor
+          initialAction={Object.keys(editingAction).length ? editingAction as FlowAction : null}
           existingActors={flowData ? Array.from(new Set(flowData.actions.map(a => a.who))) : []}
           existingActions={flowData ? flowData.actions : []}
           onSave={handleSaveAction}

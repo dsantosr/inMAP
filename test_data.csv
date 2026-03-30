@@ -1,0 +1,51 @@
+Processo;Setor;Nome do interessado;CPF/CNPJ do interessado;Telefone(s);Técnico responsável;Tipo de processo;Situação;Município;Bairro;Área assentamento?;Nome assentamento
+001/2024;Regularização Fundiária;João Silva;123.456.789-00;(98) 99999-0001;Carlos Mendes;Titulação;Processo deferido;São Luís;Centro;Não;
+002/2024;Regularização Fundiária;Maria Santos;234.567.890-11;(98) 99999-0002;Ana Paula;Titulação;Aguardando análise;São Luís;Renascença;Não;
+003/2024;Cartografia;Pedro Oliveira;345.678.901-22;(98) 99999-0003;Roberto Lima;Demarcação;Em análise técnica;Imperatriz;Nova Imperatriz;Não;
+004/2024;Regularização Fundiária;Ana Costa;456.789.012-33;(98) 99999-0004;Carlos Mendes;Titulação;Processo deferido;Caxias;Centro;Não;
+005/2024;Cadastro;Luiz Pereira;567.890.123-44;(98) 99999-0005;Fernanda Reis;Cadastramento;Aguardando documentação;Timon;São Benedito;Não;
+006/2024;Regularização Fundiária;Francisca Lima;678.901.234-55;(98) 99999-0006;Ana Paula;Titulação;Processo indeferido;São Luís;Turu;Não;
+007/2024;Assentamento;José Ferreira;789.012.345-66;(98) 99999-0007;Roberto Lima;Assentamento;Em vistoria;Bacabal;Centro;Sim;PA Nova Esperança
+008/2024;Cartografia;Antônia Souza;890.123.456-77;(98) 99999-0008;Marcos Vieira;Demarcação;Aguardando análise;Codó;São Sebastião;Não;
+009/2024;Regularização Fundiária;Raimundo Alves;901.234.567-88;(98) 99999-0009;Carlos Mendes;Titulação;Em análise técnica;São Luís;Cohab;Não;
+010/2024;Assentamento;Teresa Nascimento;012.345.678-99;(98) 99999-0010;Fernanda Reis;Assentamento;Processo deferido;Barra do Corda;Centro;Sim;PA Lago Verde
+011/2024;Regularização Fundiária;Marcos Silva;111.222.333-01;(98) 99999-0011;Ana Paula;Titulação;Pendente de pagamento;Imperatriz;Três Poderes;Não;
+012/2024;Cadastro;Lucia Teixeira;222.333.444-02;(98) 99999-0012;Roberto Lima;Cadastramento;Aguardando documentação;Caxias;Volta Redonda;Não;
+013/2024;Cartografia;Paulo Santos;333.444.555-03;(98) 99999-0013;Marcos Vieira;Medição;Em campo;São Luís;Sacavém;Não;
+014/2024;Regularização Fundiária;Sandra Oliveira;444.555.666-04;(98) 99999-0014;Carlos Mendes;Titulação;Aguardando análise;Timon;Centro;Não;
+015/2024;Assentamento;Miguel Costa;555.666.777-05;(98) 99999-0015;Fernanda Reis;Assentamento;Em vistoria;Açailândia;Vila Operária;Sim;PA São José
+016/2024;Regularização Fundiária;Carmen Pereira;666.777.888-06;(98) 99999-0016;Ana Paula;Titulação;Processo deferido;Bacabal;Santa Clara;Não;
+017/2024;Cadastro;Roberto Junior;777.888.999-07;(98) 99999-0017;Marcos Vieira;Cadastramento;Em análise técnica;Codó;Alto do Bode;Não;
+018/2024;Regularização Fundiária;Adriana Lima;888.999.000-08;(98) 99999-0018;Roberto Lima;Titulação;Aguardando análise;Santa Inês;Centro;Não;
+019/2024;Cartografia;Fernando Alves;999.000.111-09;(98) 99999-0019;Carlos Mendes;Demarcação;Processo deferido;Imperatriz;Bacuri;Não;
+020/2024;Regularização Fundiária;Beatriz Souza;000.111.222-10;(98) 99999-0020;Fernanda Reis;Titulação;Em análise técnica;São Luís;Angelim;Não;
+021/2024;Assentamento;Gilberto Ferreira;111.222.333-11;(98) 99999-0021;Ana Paula;Assentamento;Aguardando documentação;Barra do Corda;Tresidela;Sim;PA Rio Bonito
+022/2024;Regularização Fundiária;Rosana Nascimento;222.333.444-12;(98) 99999-0022;Marcos Vieira;Titulação;Pendente de pagamento;Caxias;Cangalheiro;Não;
+023/2024;Cadastro;Eduardo Teixeira;333.444.555-13;(98) 99999-0023;Roberto Lima;Cadastramento;Processo deferido;Timon;Parque Alvorada;Não;
+024/2024;Cartografia;Patrícia Santos;444.555.666-14;(98) 99999-0024;Carlos Mendes;Medição;Em campo;Açailândia;Centro;Não;
+025/2024;Regularização Fundiária;Alexandre Oliveira;555.666.777-15;(98) 99999-0025;Fernanda Reis;Titulação;Aguardando análise;São Luís;Anil;Não;
+026/2024;Regularização Fundiária;Juliana Costa;666.777.888-16;(98) 99999-0026;Ana Paula;Titulação;Em análise técnica;Imperatriz;Parque Amazonas;Não;
+027/2024;Assentamento;Manoel Pereira;777.888.999-17;(98) 99999-0027;Marcos Vieira;Assentamento;Em vistoria;Santa Inês;São Cristóvão;Sim;PA Terra Boa
+028/2024;Cadastro;Cláudia Lima;888.999.000-18;(98) 99999-0028;Roberto Lima;Cadastramento;Aguardando documentação;Codó;Codó Novo;Não;
+029/2024;Regularização Fundiária;Henrique Alves;999.000.111-19;(98) 99999-0029;Carlos Mendes;Titulação;Processo indeferido;Bacabal;Jardim;Não;
+030/2024;Cartografia;Márcia Souza;000.111.222-20;(98) 99999-0030;Fernanda Reis;Demarcação;Aguardando análise;São Luís;Vila Palmeira;Não;
+031/2024;Regularização Fundiária;Sérgio Ferreira;111.222.333-21;(98) 99999-0031;Ana Paula;Titulação;Processo deferido;Caxias;Centro;Não;
+032/2024;Assentamento;Eliane Nascimento;222.333.444-22;(98) 99999-0032;Marcos Vieira;Assentamento;Processo deferido;Timon;Cajueiro;Sim;PA Vista Alegre
+033/2024;Regularização Fundiária;Gustavo Teixeira;333.444.555-23;(98) 99999-0033;Roberto Lima;Titulação;Pendente de pagamento;Imperatriz;Vila Nova;Não;
+034/2024;Cadastro;Renata Santos;444.555.666-24;(98) 99999-0034;Carlos Mendes;Cadastramento;Em análise técnica;Açailândia;Pequiá;Não;
+035/2024;Regularização Fundiária;Bruno Oliveira;555.666.777-25;(98) 99999-0035;Fernanda Reis;Titulação;Aguardando análise;São Luís;Liberdade;Não;
+036/2024;Cartografia;Simone Costa;666.777.888-26;(98) 99999-0036;Ana Paula;Medição;Em campo;Barra do Corda;Centro;Não;
+037/2024;Regularização Fundiária;Fábio Pereira;777.888.999-27;(98) 99999-0037;Marcos Vieira;Titulação;Aguardando documentação;Codó;Santa Filomena;Não;
+038/2024;Assentamento;Tatiana Lima;888.999.000-28;(98) 99999-0038;Roberto Lima;Assentamento;Em vistoria;Santa Inês;Boa Vista;Sim;PA Esperança
+039/2024;Regularização Fundiária;Rafael Alves;999.000.111-29;(98) 99999-0039;Carlos Mendes;Titulação;Em análise técnica;São Luís;Monte Castelo;Não;
+040/2024;Cadastro;Valéria Souza;000.111.222-30;(98) 99999-0040;Fernanda Reis;Cadastramento;Processo deferido;Bacabal;Centro;Não;
+041/2024;Regularização Fundiária;Leandro Ferreira;111.222.333-31;(98) 99999-0041;Ana Paula;Titulação;Processo indeferido;Caxias;Fazendinha;Não;
+042/2024;Cartografia;Mônica Nascimento;222.333.444-32;(98) 99999-0042;Marcos Vieira;Demarcação;Aguardando análise;Timon;Centro;Não;
+043/2024;Regularização Fundiária;Thiago Teixeira;333.444.555-33;(98) 99999-0043;Roberto Lima;Titulação;Em análise técnica;Imperatriz;Santa Rita;Não;
+044/2024;Assentamento;Cristina Santos;444.555.666-34;(98) 99999-0044;Carlos Mendes;Assentamento;Aguardando documentação;Açailândia;Jardim Tropical;Sim;PA Novo Horizonte
+045/2024;Regularização Fundiária;Anderson Oliveira;555.666.777-35;(98) 99999-0045;Fernanda Reis;Titulação;Pendente de pagamento;São Luís;Cidade Operária;Não;
+046/2024;Cadastro;Denise Costa;666.777.888-36;(98) 99999-0046;Ana Paula;Cadastramento;Aguardando análise;Barra do Corda;São Francisco;Não;
+047/2024;Regularização Fundiária;Ricardo Pereira;777.888.999-37;(98) 99999-0047;Marcos Vieira;Titulação;Processo deferido;Codó;Centro;Não;
+048/2024;Cartografia;Daniela Lima;888.999.000-38;(98) 99999-0048;Roberto Lima;Medição;Em campo;Santa Inês;Nova Santa Inês;Não;
+049/2024;Regularização Fundiária;Hugo Alves;999.000.111-39;(98) 99999-0049;Carlos Mendes;Titulação;Em análise técnica;São Luís;São Francisco;Não;
+050/2024;Assentamento;Aline Souza;000.111.222-40;(98) 99999-0050;Fernanda Reis;Assentamento;Em vistoria;Bacabal;Zona Rural;Sim;PA Bom Jesus

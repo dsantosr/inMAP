@@ -54,6 +54,7 @@ export const CrossTable: React.FC<CrossTableProps> = ({ rows, situacoes }) => {
                   {sit.length > 20 ? sit.slice(0, 18) + '…' : sit}
                 </th>
               ))}
+              <th className="cross-table-header-sit" title="Total" style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -73,6 +74,9 @@ export const CrossTable: React.FC<CrossTableProps> = ({ rows, situacoes }) => {
                     </td>
                   );
                 })}
+                <td className="cross-table-cell" style={{ fontWeight: 600, backgroundColor: 'rgba(255,255,255,0.05)' }}>
+                  {situacoes.reduce((acc, sit) => acc + (Number(row[sit]) || 0), 0).toLocaleString('pt-BR')}
+                </td>
               </tr>
             ))}
           </tbody>
