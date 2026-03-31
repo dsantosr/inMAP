@@ -115,7 +115,7 @@ export const ProcessDashboard: React.FC<ProcessDashboardProps> = () => {
   // Base records exluding "ignored/concluded" statuses (used for bottleneck-focused charts)
   const pendingData = useMemo(() => filteredData.filter(r => !ignoredSituacoes.has(r.situacao)), [filteredData, ignoredSituacoes]);
 
-  const situacaoData = useMemo(() => groupBy(filteredData, 'situacao'), [filteredData]);
+  const situacaoData = useMemo(() => groupBy(pendingData, 'situacao'), [pendingData]);
   const setorData = useMemo(() => groupBy(pendingData, 'setor'), [pendingData]);
   const crossData = useMemo(() => crossTabSetorSituacao(pendingData), [pendingData]);
 
@@ -284,7 +284,7 @@ export const ProcessDashboard: React.FC<ProcessDashboardProps> = () => {
 
         {/* Charts side by side */}
         <div className="dashboard-charts-row">
-          <SituacaoChart data={situacaoData} concludedSituacoes={ignoredSituacoes} />
+          <SituacaoChart data={situacaoData} />
           <SetorChart
             data={setorData}
             onSelectSetor={(setor) => setFilters(f => ({ ...f, setores: [setor] }))}
@@ -295,7 +295,7 @@ export const ProcessDashboard: React.FC<ProcessDashboardProps> = () => {
         <CrossTable rows={crossData.rows} situacoes={crossData.situacoes} />
 
         {/* Detailed table */}
-        <DataTable data={filteredData} />
+        <DataTable data={pendingData} />
       </div>
     </div>
   );

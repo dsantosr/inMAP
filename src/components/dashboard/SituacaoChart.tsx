@@ -4,7 +4,6 @@ import type { AggregatedItem } from '../../types/processTypes';
 
 interface SituacaoChartProps {
   data: AggregatedItem[];
-  concludedSituacoes: Set<string>;
   topN?: number;
 }
 
@@ -14,11 +13,10 @@ const COLORS = [
   '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899',
 ];
 
-export const SituacaoChart: React.FC<SituacaoChartProps> = ({ data, concludedSituacoes, topN = 15 }) => {
+export const SituacaoChart: React.FC<SituacaoChartProps> = ({ data, topN = 15 }) => {
   const chartData = data.slice(0, topN).map(item => ({
     ...item,
     displayName: item.name.length > 30 ? item.name.slice(0, 28) + '…' : item.name,
-    isIgnored: concludedSituacoes.has(item.name),
   }));
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -55,7 +53,7 @@ export const SituacaoChart: React.FC<SituacaoChartProps> = ({ data, concludedSit
               {chartData.map((entry, index) => (
                 <Cell
                   key={entry.name}
-                  fill={entry.isIgnored ? '#4b5563' : COLORS[index % COLORS.length]}
+                  fill={COLORS[index % COLORS.length]}
                   fillOpacity={0.85}
                 />
               ))}

@@ -111,8 +111,8 @@ export function rankMunicipiosByGargalo(
     for (const r of records) {
       if (!concludedSituacoes.has(r.situacao)) {
         situacaoMap.set(r.situacao, (situacaoMap.get(r.situacao) || 0) + 1);
+        setorMap.set(r.setor, (setorMap.get(r.setor) || 0) + 1);
       }
-      setorMap.set(r.setor, (setorMap.get(r.setor) || 0) + 1);
     }
 
     const topSituacoes = [...situacaoMap.entries()]
