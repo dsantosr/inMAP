@@ -26,3 +26,8 @@ dist-ssr
 # JSON restriction (Hide business rules, keep styling)
 public/*.json
 !public/organogram.json
+
+# Notes and local docs
+CLAUDE.md
+wiki/
+.obsidian/
