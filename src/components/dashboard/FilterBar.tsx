@@ -11,6 +11,7 @@ interface FilterBarProps {
     situacoes: string[];
     tiposProcesso: string[];
     tecnicos: string[];
+    anos: string[];
   };
   totalRecords: number;
   filteredRecords: number;
@@ -112,6 +113,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     filters.situacoes.length > 0 ||
     filters.tiposProcesso.length > 0 ||
     filters.tecnicos.length > 0 ||
+    filters.anos.length > 0 ||
     filters.areaAssentamento !== null;
 
   const clearAll = () => {
@@ -121,6 +123,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       situacoes: [],
       tiposProcesso: [],
       tecnicos: [],
+      anos: [],
       areaAssentamento: null,
     });
   };
@@ -157,6 +160,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           options={availableValues.tecnicos}
           selected={filters.tecnicos}
           onChange={(v) => onFiltersChange({ ...filters, tecnicos: v })}
+        />
+        <MultiSelect
+          label="Ano"
+          options={availableValues.anos}
+          selected={filters.anos}
+          onChange={(v) => onFiltersChange({ ...filters, anos: v })}
         />
         <div className="filter-select">
           <button

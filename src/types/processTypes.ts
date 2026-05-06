@@ -19,6 +19,7 @@ export interface FilterState {
   situacoes: string[];
   tiposProcesso: string[];
   tecnicos: string[];
+  anos: string[];
   areaAssentamento: string | null; // "Sim", "Não", or null (all)
 }
 
@@ -48,6 +49,7 @@ export const EMPTY_FILTERS: FilterState = {
   situacoes: [],
   tiposProcesso: [],
   tecnicos: [],
+  anos: [],
   areaAssentamento: null,
 };
 

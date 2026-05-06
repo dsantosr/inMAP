@@ -61,6 +61,15 @@ function parseLine(line: string): string[] {
 }
 
 /**
+ * Extract the year from the process number (digits after the last "/").
+ * E.g. "072401944/2024" → "2024". Returns "" if not found.
+ */
+export function extractAnoFromProcesso(processo: string): string {
+  const match = processo.match(/\/(\d{4})\s*$/);
+  return match ? match[1] : '';
+}
+
+/**
  * Apply combined filters to the dataset.
  */
 export function applyFilters(data: ProcessRecord[], filters: FilterState): ProcessRecord[] {
@@ -69,6 +78,7 @@ export function applyFilters(data: ProcessRecord[], filters: FilterState): Proce
   const situacaoSet = filters.situacoes.length > 0 ? new Set(filters.situacoes) : null;
   const tipoSet = filters.tiposProcesso.length > 0 ? new Set(filters.tiposProcesso) : null;
   const tecnicoSet = filters.tecnicos.length > 0 ? new Set(filters.tecnicos) : null;
+  const anoSet = filters.anos.length > 0 ? new Set(filters.anos) : null;
 
   return data.filter(record => {
     if (municipioSet && !municipioSet.has(record.municipio)) return false;
@@ -76,9 +86,22 @@ export function applyFilters(data: ProcessRecord[], filters: FilterState): Proce
     if (situacaoSet && !situacaoSet.has(record.situacao)) return false;
     if (tipoSet && !tipoSet.has(record.tipoProcesso)) return false;
     if (tecnicoSet && !tecnicoSet.has(record.tecnicoResponsavel)) return false;
+    if (anoSet && !anoSet.has(extractAnoFromProcesso(record.processo))) return false;
     if (filters.areaAssentamento !== null && record.areaAssentamento !== filters.areaAssentamento) return false;
     return true;
   });
+}
+
+/**
+ * Get unique years extracted from process numbers, sorted descending.
+ */
+export function getUniqueAnos(data: ProcessRecord[]): string[] {
+  const set = new Set<string>();
+  for (const record of data) {
+    const ano = extractAnoFromProcesso(record.processo);
+    if (ano) set.add(ano);
+  }
+  return [...set].sort((a, b) => b.localeCompare(a));
 }
 
 /**
