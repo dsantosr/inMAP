@@ -10,6 +10,7 @@ import {
   crossTabSetorSituacao,
   getUniqueValues,
   getUniqueAnos,
+  getUniqueTiposDocumento,
   exportFilteredCSV,
   exportRankingCSV,
 } from '../utils/processDataEngine';
@@ -106,6 +107,7 @@ export const ProcessDashboard: React.FC<ProcessDashboardProps> = () => {
     tiposProcesso: getUniqueValues(rawData, 'tipoProcesso'),
     tecnicos: getUniqueValues(rawData, 'tecnicoResponsavel'),
     anos: getUniqueAnos(rawData),
+    tiposDocumento: getUniqueTiposDocumento(rawData),
   }), [rawData]);
 
   // Aggregated data (from filtered)

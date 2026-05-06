@@ -12,6 +12,7 @@ interface FilterBarProps {
     tiposProcesso: string[];
     tecnicos: string[];
     anos: string[];
+    tiposDocumento: string[];
   };
   totalRecords: number;
   filteredRecords: number;
@@ -114,6 +115,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     filters.tiposProcesso.length > 0 ||
     filters.tecnicos.length > 0 ||
     filters.anos.length > 0 ||
+    filters.tiposDocumento.length > 0 ||
     filters.areaAssentamento !== null;
 
   const clearAll = () => {
@@ -124,6 +126,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       tiposProcesso: [],
       tecnicos: [],
       anos: [],
+      tiposDocumento: [],
       areaAssentamento: null,
     });
   };
@@ -166,6 +169,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           options={availableValues.anos}
           selected={filters.anos}
           onChange={(v) => onFiltersChange({ ...filters, anos: v })}
+        />
+        <MultiSelect
+          label="CPF/CNPJ"
+          options={availableValues.tiposDocumento}
+          selected={filters.tiposDocumento}
+          onChange={(v) => onFiltersChange({ ...filters, tiposDocumento: v })}
         />
         <div className="filter-select">
           <button

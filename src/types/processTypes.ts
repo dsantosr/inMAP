@@ -20,6 +20,7 @@ export interface FilterState {
   tiposProcesso: string[];
   tecnicos: string[];
   anos: string[];
+  tiposDocumento: string[]; // "CPF", "CNPJ", "(vazio)"
   areaAssentamento: string | null; // "Sim", "Não", or null (all)
 }
 
@@ -50,6 +51,7 @@ export const EMPTY_FILTERS: FilterState = {
   tiposProcesso: [],
   tecnicos: [],
   anos: [],
+  tiposDocumento: [],
   areaAssentamento: null,
 };
 

@@ -69,6 +69,20 @@ export function extractAnoFromProcesso(processo: string): string {
   return match ? match[1] : '';
 }
 
+const CPF_REGEX = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+const CNPJ_REGEX = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+
+/**
+ * Classify a CPF/CNPJ string by its formatted pattern.
+ * Returns "CPF", "CNPJ", or "(vazio)" for empty/unrecognized values.
+ */
+export function classifyCpfCnpj(value: string): 'CPF' | 'CNPJ' | '(vazio)' {
+  const trimmed = value?.trim() ?? '';
+  if (CPF_REGEX.test(trimmed)) return 'CPF';
+  if (CNPJ_REGEX.test(trimmed)) return 'CNPJ';
+  return '(vazio)';
+}
+
 /**
  * Apply combined filters to the dataset.
  */
@@ -79,6 +93,7 @@ export function applyFilters(data: ProcessRecord[], filters: FilterState): Proce
   const tipoSet = filters.tiposProcesso.length > 0 ? new Set(filters.tiposProcesso) : null;
   const tecnicoSet = filters.tecnicos.length > 0 ? new Set(filters.tecnicos) : null;
   const anoSet = filters.anos.length > 0 ? new Set(filters.anos) : null;
+  const tipoDocSet = filters.tiposDocumento.length > 0 ? new Set(filters.tiposDocumento) : null;
 
   return data.filter(record => {
     if (municipioSet && !municipioSet.has(record.municipio)) return false;
@@ -87,9 +102,20 @@ export function applyFilters(data: ProcessRecord[], filters: FilterState): Proce
     if (tipoSet && !tipoSet.has(record.tipoProcesso)) return false;
     if (tecnicoSet && !tecnicoSet.has(record.tecnicoResponsavel)) return false;
     if (anoSet && !anoSet.has(extractAnoFromProcesso(record.processo))) return false;
+    if (tipoDocSet && !tipoDocSet.has(classifyCpfCnpj(record.cpfCnpj))) return false;
     if (filters.areaAssentamento !== null && record.areaAssentamento !== filters.areaAssentamento) return false;
     return true;
   });
+}
+
+/**
+ * Get unique CPF/CNPJ classifications present in the dataset.
+ */
+export function getUniqueTiposDocumento(data: ProcessRecord[]): string[] {
+  const set = new Set<string>();
+  for (const record of data) set.add(classifyCpfCnpj(record.cpfCnpj));
+  const order = ['CPF', 'CNPJ', '(vazio)'];
+  return order.filter(o => set.has(o));
 }
 
 /**
