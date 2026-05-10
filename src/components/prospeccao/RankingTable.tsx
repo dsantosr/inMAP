@@ -16,9 +16,13 @@ const CATEGORIAS: CategoriaOportunidade[] = [
   'alta_prioridade',
   'media_alta',
   'oportunidade_politica',
-  'reativacao',
-  'em_andamento',
 ];
+
+const CATEGORIA_LABELS_CUSTOM: Record<string, string> = {
+  alta_prioridade: 'Prioridade Alta',
+  media_alta: 'Prioridade Média',
+  oportunidade_politica: 'Prioridade Baixa',
+};
 
 export const RankingTable: React.FC<RankingTableProps> = ({
   municipios,
@@ -29,8 +33,6 @@ export const RankingTable: React.FC<RankingTableProps> = ({
   const [sortKey, setSortKey] = useState<SortKey>('scoreTotal');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [selectedCats, setSelectedCats] = useState<Set<CategoriaOportunidade>>(new Set(CATEGORIAS));
-  const [page, setPage] = useState(0);
-  const PAGE_SIZE = 15;
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -53,13 +55,9 @@ export const RankingTable: React.FC<RankingTableProps> = ({
       });
   }, [municipios, search, sortKey, sortDir, selectedCats]);
 
-  const paginated = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-
   const handleSort = (key: SortKey) => {
     if (key === sortKey) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
     else { setSortKey(key); setSortDir('desc'); }
-    setPage(0);
   };
 
   const toggleCat = (cat: CategoriaOportunidade) => {
@@ -68,7 +66,6 @@ export const RankingTable: React.FC<RankingTableProps> = ({
       if (next.has(cat)) next.delete(cat); else next.add(cat);
       return next;
     });
-    setPage(0);
   };
 
   const SortIcon = ({ k }: { k: SortKey }) => {
@@ -105,7 +102,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({
           <Search size={12} color="var(--text-secondary)" />
           <input
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(0); }}
+            onChange={(e) => { setSearch(e.target.value); }}
             placeholder="Buscar município..."
             style={{
               background: 'transparent',
@@ -137,7 +134,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({
                 transition: 'all 0.15s',
               }}
             >
-              {CATEGORIA_LABELS[cat]}
+              {CATEGORIA_LABELS_CUSTOM[cat]}
             </button>
           ))}
         </div>
@@ -190,7 +187,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {paginated.map((m, i) => {
+            {filtered.map((m, i) => {
               const isSelected = m.nome === selectedMunicipio;
               return (
                 <tr
@@ -212,9 +209,9 @@ export const RankingTable: React.FC<RankingTableProps> = ({
                       <span style={{
                         fontSize: '0.55rem',
                         color: 'var(--text-secondary)',
-                        minWidth: '16px',
+                        minWidth: '18px',
                       }}>
-                        #{page * PAGE_SIZE + i + 1}
+                        #{i + 1}
                       </span>
                       {m.nome}
                     </div>
@@ -229,7 +226,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({
                       border: `1px solid ${CATEGORIA_COLORS[m.categoria]}44`,
                       whiteSpace: 'nowrap',
                     }}>
-                      {CATEGORIA_LABELS[m.categoria].split(' ')[0]}
+                      {CATEGORIA_LABELS_CUSTOM[m.categoria] ?? CATEGORIA_LABELS[m.categoria]}
                     </span>
                   </td>
                   <td style={{ padding: '0.45rem 0.6rem', textAlign: 'right', fontWeight: 600, color: 'var(--accent-color)' }}>
@@ -252,7 +249,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({
                 </tr>
               );
             })}
-            {paginated.length === 0 && (
+            {filtered.length === 0 && (
               <tr>
                 <td colSpan={7} style={{ padding: '1.5rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.72rem' }}>
                   Nenhum município encontrado
@@ -263,30 +260,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({
         </table>
       </div>
 
-      {/* Paginação */}
-      {totalPages > 1 && (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '0.5rem',
-          paddingTop: '0.5rem',
-          fontSize: '0.65rem',
-          color: 'var(--text-secondary)',
-        }}>
-          <button
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={page === 0}
-            style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.2rem 0.5rem', cursor: 'pointer', color: 'var(--text-secondary)', opacity: page === 0 ? 0.4 : 1 }}
-          >‹</button>
-          <span>{page + 1} / {totalPages}</span>
-          <button
-            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-            disabled={page >= totalPages - 1}
-            style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.2rem 0.5rem', cursor: 'pointer', color: 'var(--text-secondary)', opacity: page >= totalPages - 1 ? 0.4 : 1 }}
-          >›</button>
-        </div>
-      )}
+
     </div>
   );
 };

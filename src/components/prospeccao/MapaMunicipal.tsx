@@ -208,16 +208,47 @@ export const MapaMunicipal: React.FC<MapaMunicipalProps> = ({
         display: 'flex',
         flexDirection: 'column',
         gap: '0.28rem',
+        minWidth: '155px',
       }}>
         <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.65rem', marginBottom: '0.1rem' }}>Legenda</div>
+
+        {/* ── Gradiente Candidato (preto → amarelo ITERMA) ── */}
+        <div>
+          <div style={{ color: '#bbb', marginBottom: '0.18rem', lineHeight: 1 }}>Prioridade</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+            <span style={{ fontSize: '0.58rem', color: '#888', whiteSpace: 'nowrap' }}>Baixa</span>
+            <div style={{
+              flex: 1,
+              height: '9px',
+              borderRadius: '3px',
+              background: 'linear-gradient(to right, rgb(15,10,10), rgb(140,90,10), rgb(253,189,19))',
+              border: '1px solid rgba(255,255,255,0.12)',
+            }} />
+            <span style={{ fontSize: '0.58rem', color: '#888', whiteSpace: 'nowrap' }}>Alta</span>
+          </div>
+        </div>
+
+        {/* ── Gradiente Ilha do Maranhão (navy → ciano) ── */}
+        <div>
+          <div style={{ color: '#bbb', marginBottom: '0.18rem', lineHeight: 1 }}>Prioridade Grande Ilha</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+            <span style={{ fontSize: '0.58rem', color: '#888', whiteSpace: 'nowrap' }}>Baixa</span>
+            <div style={{
+              flex: 1,
+              height: '9px',
+              borderRadius: '3px',
+              background: 'linear-gradient(to right, rgb(8,28,70), rgb(6,100,160), rgb(6,182,212))',
+              border: '1px solid rgba(255,255,255,0.12)',
+            }} />
+            <span style={{ fontSize: '0.58rem', color: '#888', whiteSpace: 'nowrap' }}>Alta</span>
+          </div>
+        </div>
+
+        {/* ── Swatches discretos ── */}
         {[
-          { color: 'rgba(6,182,212,0.95)', label: 'Ilha do Maranhão — maior pop.' },
-          { color: 'rgba(8,50,120,0.65)',  label: 'Ilha do Maranhão — menor pop.' },
-          { color: 'rgba(34,197,94,0.85)', label: 'REURB concluído (c/ títulos)' },
-          { color: 'rgba(168,85,247,0.8)',  label: 'REURB em Análise (sem títulos)' },
-          { color: 'rgba(253,189,19,0.95)', label: 'Candidato — alta prioridade' },
-          { color: 'rgba(80,20,10,0.6)',    label: 'Candidato — baixa prioridade' },
-          { color: 'rgba(40,45,52,0.7)',   label: 'Sem dados no CSV' },
+          { color: 'rgba(34,197,94,0.85)',  label: 'REURB concluído' },
+          { color: 'rgba(168,85,247,0.8)',  label: 'REURB em Análise' },
+          { color: 'rgba(40,45,52,0.7)',    label: 'Sem dados no CSV' },
         ].map(({ color, label }) => (
           <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <div style={{ width: '11px', height: '11px', borderRadius: '2px', background: color, flexShrink: 0, border: '1px solid rgba(255,255,255,0.15)' }} />

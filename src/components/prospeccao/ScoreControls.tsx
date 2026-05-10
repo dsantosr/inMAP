@@ -10,23 +10,28 @@ interface ScoreControlsProps {
 const CRITERIA = [
   {
     key: 'populacaoFavelas' as keyof ScoreWeights,
+    otherKey: 'pctVotosCarlos' as keyof ScoreWeights,
     label: 'Pop. em Favelas',
     description: 'Tamanho da comunidade urbana vulnerável (Censo 2022)',
     icon: '🏘️',
   },
   {
     key: 'pctVotosCarlos' as keyof ScoreWeights,
+    otherKey: 'populacaoFavelas' as keyof ScoreWeights,
     label: 'Apoio Político',
     description: '% de votos ao gestor estadual (eleições)',
     icon: '🗳️',
   },
 ];
 
+const STEPS = [0, 25, 50, 75, 100];
+
 export const ScoreControls: React.FC<ScoreControlsProps> = ({ weights, onChange }) => {
   const totalWeight = Object.values(weights).reduce((a, b) => a + b, 0);
 
-  const handleChange = (key: keyof ScoreWeights, value: number) => {
-    onChange({ ...weights, [key]: value });
+  /** Ao clicar num step, fixa o critério e balanceia o outro para 100 − step */
+  const handleStep = (key: keyof ScoreWeights, otherKey: keyof ScoreWeights, step: number) => {
+    onChange({ ...weights, [key]: step, [otherKey]: 100 - step });
   };
 
   const handleReset = () => {
@@ -42,6 +47,7 @@ export const ScoreControls: React.FC<ScoreControlsProps> = ({ weights, onChange 
       height: '100%',
       boxSizing: 'border-box',
     }}>
+      {/* Cabeçalho */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -70,49 +76,19 @@ export const ScoreControls: React.FC<ScoreControlsProps> = ({ weights, onChange 
         </button>
       </div>
 
-      {/* Legenda de cores */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.35rem',
-        marginBottom: '0.85rem',
-        padding: '0.5rem 0.6rem',
-        background: 'rgba(0,0,0,0.2)',
-        borderRadius: '6px',
-      }}>
-        <div style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.1rem' }}>
-          Legenda do mapa
-        </div>
-        {[
-          { color: 'rgba(6,182,212,0.95)',  label: 'Ilha do Maranhão — maior pop.' },
-          { color: 'rgba(8,50,120,0.65)',   label: 'Ilha do Maranhão — menor pop.' },
-          { color: 'rgba(34,197,94,0.8)', label: 'REURB concluído (c/ títulos)' },
-          { color: 'rgba(168,85,247,0.8)', label: 'REURB em Análise (sem títulos)' },
-          { color: 'rgba(253,189,19,0.95)', label: 'Candidato — alta prioridade' },
-          { color: 'rgba(80,20,10,0.6)',    label: 'Candidato — baixa prioridade' },
-        ].map(({ color, label }) => (
-          <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <div style={{
-              width: '12px', height: '12px', borderRadius: '2px',
-              background: color, flexShrink: 0,
-              border: '1px solid rgba(255,255,255,0.15)',
-            }} />
-            <span style={{ fontSize: '0.62rem', color: 'var(--text-secondary)' }}>{label}</span>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-        {CRITERIA.map(({ key, label, description, icon }) => {
+      {/* Critérios */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+        {CRITERIA.map(({ key, otherKey, label, description, icon }) => {
           const value = weights[key];
           const pct = totalWeight > 0 ? Math.round((value / totalWeight) * 100) : 0;
           return (
             <div key={key}>
+              {/* Label + percentual efetivo */}
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: '0.25rem',
+                marginBottom: '0.4rem',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                   <span style={{ fontSize: '0.8rem' }}>{icon}</span>
@@ -128,17 +104,42 @@ export const ScoreControls: React.FC<ScoreControlsProps> = ({ weights, onChange 
                   {pct}%
                 </span>
               </div>
-              <div title={description}>
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={value}
-                  onChange={(e) => handleChange(key, parseInt(e.target.value))}
-                  style={{ width: '100%', accentColor: 'var(--accent-color)', cursor: 'pointer' }}
-                />
+
+              {/* Botões discretos: 0 / 25 / 50 / 75 / 100 */}
+              <div style={{ display: 'flex', gap: '0.25rem' }} title={description}>
+                {STEPS.map((step) => {
+                  const isActive = value === step;
+                  return (
+                    <button
+                      key={step}
+                      onClick={() => handleStep(key, otherKey, step)}
+                      style={{
+                        flex: 1,
+                        padding: '0.22rem 0',
+                        fontSize: '0.6rem',
+                        fontWeight: isActive ? 700 : 400,
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s',
+                        border: isActive
+                          ? '1px solid var(--accent-color)'
+                          : '1px solid var(--border-color)',
+                        background: isActive
+                          ? 'rgba(253,189,19,0.18)'
+                          : 'transparent',
+                        color: isActive
+                          ? 'var(--accent-color)'
+                          : 'var(--text-secondary)',
+                      }}
+                    >
+                      {step}%
+                    </button>
+                  );
+                })}
               </div>
-              <div style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', marginTop: '0.1rem' }}>
+
+              {/* Descrição */}
+              <div style={{ fontSize: '0.58rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                 {description}
               </div>
             </div>
