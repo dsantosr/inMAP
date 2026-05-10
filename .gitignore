@@ -31,3 +31,6 @@ public/*.json
 CLAUDE.md
 wiki/
 .obsidian/
+
+# Local test data (CSVs for feature development)
+datatest/

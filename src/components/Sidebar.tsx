@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import type { FlowchartData } from '../types/flowchart';
 import type { AppModule } from '../App';
-import { Upload, Download, FileJson, Edit2, Image, GitBranch, BarChart3 } from 'lucide-react';
+import { Upload, Download, FileJson, Edit2, Image, GitBranch, BarChart3, Target } from 'lucide-react';
 
 interface SidebarProps {
   activeModule: AppModule;
@@ -90,6 +90,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         >
           <BarChart3 size={14} />
           <span>Processos</span>
+        </button>
+        <button
+          className={`module-tab ${activeModule === 'prospeccao' ? 'active' : ''}`}
+          onClick={() => onModuleChange('prospeccao')}
+          title="Prospecção Data-Driven"
+        >
+          <Target size={14} />
+          <span>Prospecção</span>
         </button>
       </div>
 

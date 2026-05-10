@@ -6,8 +6,9 @@ import { SwimlaneViewer } from './components/SwimlaneViewer';
 import { ActionEditor } from './components/ActionEditor';
 import { ProcessDashboard } from './components/ProcessDashboard';
 import type { FlowchartData, FlowAction } from './types/flowchart';
+import { ProspeccaoView } from './components/prospeccao/ProspeccaoView';
 
-export type AppModule = 'flowchart' | 'processos';
+export type AppModule = 'flowchart' | 'processos' | 'prospeccao';
 
 function App() {
   const [activeModule, setActiveModule] = useState<AppModule>('flowchart');
@@ -84,8 +85,10 @@ function App() {
             isExporting={isExporting}
             onChangeName={(newName: string) => flowData && setFlowData({ ...flowData, name: newName })}
           />
-        ) : (
+        ) : activeModule === 'processos' ? (
           <ProcessDashboard />
+        ) : (
+          <ProspeccaoView />
         )}
       </div>
       {editingAction !== null && activeModule === 'flowchart' && (
